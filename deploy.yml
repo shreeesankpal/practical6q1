@@ -1,0 +1,22 @@
+---
+- name: Deploy Application
+  hosts: webservers
+  become: yes
+
+  tasks:
+
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+
+    - name: Copy Application Files
+      copy:
+        src: app/
+        dest: /var/www/html/
+
+    - name: Restart Apache
+      service:
+        name: apache2
+        state: restarted
